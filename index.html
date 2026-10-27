@@ -4,648 +4,247 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080807">
-<title>Our Museum — A Collection of Memories</title>
+<meta name="theme-color" content="#fff0f5">
+<title>A Little Birthday Magic ♡</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Parisienne&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap');
-
-:root {
-  --gold: #d5b77a;
-  --cream: #f2e9d8;
-  --black: #080807;
+:root{
+  --pink:#f28eb4;
+  --deep:#d94f87;
+  --light:#fff0f5;
+  --cream:#fffaf7;
+  --text:#71334e;
+  --muted:#a36a80;
 }
-
-* { box-sizing: border-box; }
-
-html {
-  scroll-behavior: smooth;
-  background: var(--black);
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--light);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
 }
-
-body {
-  margin: 0;
-  background: var(--black);
-  color: var(--cream);
-  font-family: 'DM Sans', sans-serif;
-  overflow-x: hidden;
+button{font:inherit}
+button:focus-visible,a:focus-visible{
+  outline:3px solid #c74480;
+  outline-offset:4px;
 }
-
-button { font: inherit; }
-
-#intro {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 25px;
+.page{display:none;min-height:100svh;position:relative;overflow:hidden}
+.page.active{display:block;animation:pageIn .75s ease both}
+@keyframes pageIn{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.background-glow{
+  position:absolute;inset:0;pointer-events:none;
   background:
-    radial-gradient(ellipse at 50% 45%, #292217 0%, #11100d 38%, #050505 78%);
-  transition: opacity 1.2s ease, visibility 1.2s ease;
-}
-
-#intro::before {
-  content: "";
-  position: absolute;
-  inset: 18px;
-  border: 1px solid #c9aa6940;
-  pointer-events: none;
-}
-
-#intro.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.intro-content {
-  animation: introReveal 1.8s both;
-}
-
-.eyebrow {
-  color: var(--gold);
-  font-size: 10px;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-}
-
-.intro-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(60px, 11vw, 120px);
-  line-height: .9;
-  font-weight: 300;
-  letter-spacing: -3px;
-  margin: 30px 0 20px;
-}
-
-.intro-title em {
-  color: var(--gold);
-  font-weight: 300;
-}
-
-.intro-sub {
-  color: #bdb4a3;
-  font-size: 12px;
-  letter-spacing: 2px;
-  margin-bottom: 40px;
-}
-
-.enter-btn {
-  padding: 15px 31px;
-  border: 1px solid #c8a96999;
-  color: var(--cream);
-  background: #b3944910;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  font-size: 10px;
-  cursor: pointer;
-  transition: .4s;
-}
-
-.enter-btn:hover {
-  background: var(--gold);
-  color: #15120b;
-  box-shadow: 0 0 35px #c5a65b30;
-}
-
-@keyframes introReveal {
-  from { opacity: 0; transform: translateY(25px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-#museum {
-  min-height: 100vh;
-  opacity: 0;
-  transition: opacity 1.5s;
-}
-
-#museum.ready { opacity: 1; }
-
-.topbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 5;
-  width: 100%;
-  padding: 28px 6%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  pointer-events: none;
-}
-
-.brand {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 24px;
-  letter-spacing: 1px;
-}
-
-.brand span { color: var(--gold); }
-
-.top-note {
-  font-size: 9px;
-  letter-spacing: 3px;
-  color: #b9ac91;
-}
-
-.scene {
-  height: 100svh;
-  min-height: 600px;
-  position: relative;
-  overflow: hidden;
-  perspective: 1000px;
-  background: #100e0a;
-}
-
-.ambient {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 18%, #a68b4c21, transparent 42%),
-    radial-gradient(ellipse at 50% 80%, #c49d4820, transparent 55%),
-    linear-gradient(#080807, #17130d 60%, #080807);
-}
-
-.ceiling {
-  position: absolute;
-  top: -8%;
-  left: -10%;
-  width: 120%;
-  height: 35%;
-  background: linear-gradient(180deg, #292319, #100e0b);
-  clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
-  border-bottom: 1px solid #8e75453b;
-}
-
-.floor {
-  position: absolute;
-  bottom: -20%;
-  left: -30%;
-  width: 160%;
-  height: 55%;
-  transform: rotateX(54deg);
-  transform-origin: top center;
-  background:
-    repeating-linear-gradient(90deg, transparent 0 99px, #d5b77a10 100px 101px),
-    repeating-linear-gradient(0deg, #b79b6010 0 1px, transparent 1px 70px),
-    linear-gradient(#34291b, #090807);
-  box-shadow: 0 -30px 70px #000;
-}
-
-.gallery {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  will-change: transform;
-  transition: transform .18s ease-out;
-}
-
-.wall {
-  position: absolute;
-  top: 14%;
-  height: 63%;
-  width: 50%;
-  background:
-    linear-gradient(90deg, #15120d, #292217 50%, #18140e);
-  border-top: 1px solid #bca16a24;
-  border-bottom: 2px solid #bca16a40;
-  box-shadow: inset 0 0 70px #0009;
-}
-
-.wall.left {
-  left: -9%;
-  transform-origin: right center;
-  transform: rotateY(24deg);
-}
-
-.wall.right {
-  right: -9%;
-  transform-origin: left center;
-  transform: rotateY(-24deg);
-}
-
-.wall.back {
-  left: 25%;
-  top: 15%;
-  width: 50%;
-  height: 60%;
-  background: linear-gradient(90deg, #1b1710, #33291a 50%, #1b1710);
-}
-
-.gallery-light {
-  position: absolute;
-  top: 8%;
-  width: 140px;
-  height: 180px;
-  background: radial-gradient(ellipse, #e4c78225, transparent 70%);
-  animation: breathe 5s infinite alternate;
-}
-
-.light-one { left: 20%; }
-.light-two { left: 44%; animation-delay: -2s; }
-.light-three { right: 20%; animation-delay: -3s; }
-
-@keyframes breathe {
-  from { opacity: .45; }
-  to { opacity: 1; }
-}
-
-.artwork {
-  position: absolute;
-  top: 29%;
-  left: 50%;
-  width: clamp(95px, 14vw, 175px);
-  height: clamp(145px, 25vh, 250px);
-  padding: 8px;
-  border: 1px solid #d2b47599;
-  background: linear-gradient(135deg, #735c31, #17130d 55%, #5d4929);
-  box-shadow: 0 0 0 4px #16120b, 0 0 0 5px #b8a06a65, 0 15px 30px #0008;
-  cursor: pointer;
-  transition: transform .5s, filter .5s;
-  animation: artAppear 1.5s both;
-}
-
-.artwork:hover {
-  transform: translateY(-8px) scale(1.045);
-  filter: brightness(1.2);
-  z-index: 3;
-}
-
-.artwork img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  filter: saturate(.72) brightness(.8);
-}
-
-.artwork .art-label {
-  position: absolute;
-  top: calc(100% + 14px);
-  left: 0;
-  width: 100%;
-  text-align: center;
-  color: #cbb98d;
-  font-size: 9px;
-  letter-spacing: 2px;
-  white-space: nowrap;
-}
-
-.artwork.a1 { margin-left: -245px; animation-delay: .2s; }
-.artwork.a2 { margin-left: -85px; top: 23%; animation-delay: .45s; }
-.artwork.a3 { margin-left: 80px; animation-delay: .7s; }
-.artwork.a4 { margin-left: -165px; top: 57%; width: 110px; height: 130px; animation-delay: .9s; }
-.artwork.a5 { margin-left: 45px; top: 57%; width: 110px; height: 130px; animation-delay: 1.1s; }
-
-@keyframes artAppear {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.statue {
-  position: absolute;
-  bottom: 12%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 95px;
-  height: 130px;
-  opacity: .65;
-}
-
-.statue::before {
-  content: "";
-  position: absolute;
-  width: 31px;
-  height: 37px;
-  border-radius: 48% 48% 42% 42%;
-  background: linear-gradient(90deg, #17140f, #51402a, #17140f);
-  left: 32px;
-  top: 0;
-}
-
-.statue::after {
-  content: "";
-  position: absolute;
-  width: 76px;
-  height: 90px;
-  top: 33px;
-  left: 9px;
-  background: linear-gradient(90deg, #17140f, #54452e, #20190f);
-  clip-path: polygon(32% 0, 67% 0, 82% 35%, 100% 100%, 0 100%, 18% 35%);
-}
-
-.character {
-  position: absolute;
-  bottom: 10%;
-  width: 30px;
-  height: 88px;
-  z-index: 4;
-  transform-origin: bottom center;
-  animation: walk 1s infinite alternate ease-in-out;
-  filter: drop-shadow(0 0 12px #c9ad7040);
-}
-
-.character .head {
-  position: absolute;
-  width: 19px;
-  height: 21px;
-  left: 5px;
-  top: 0;
-  border-radius: 50%;
-  background: linear-gradient(90deg, #6b4d38, #d0a580);
-}
-
-.character .body {
-  position: absolute;
-  top: 20px;
-  left: 2px;
-  width: 25px;
-  height: 39px;
-  border-radius: 8px 8px 3px 3px;
-  background: linear-gradient(90deg, #17191b, #65615a, #252321);
-}
-
-.character .leg {
-  position: absolute;
-  top: 55px;
-  left: 5px;
-  width: 8px;
-  height: 31px;
-  background: #24201b;
-  transform-origin: top;
-  animation: legWalk .5s infinite alternate;
-}
-
-.character .leg.two {
-  left: 17px;
-  animation-delay: -.5s;
-}
-
-.character .arm {
-  position: absolute;
-  top: 23px;
-  left: 0;
-  width: 7px;
-  height: 34px;
-  background: #7b624a;
-  transform: rotate(12deg);
-  transform-origin: top;
-  animation: legWalk .5s infinite alternate-reverse;
-}
-
-.character .arm.two {
-  left: 24px;
-  animation-delay: -.5s;
-}
-
-.character.one { left: calc(50% - 55px); }
-.character.two {
-  left: calc(50% + 13px);
-  transform: scale(.85);
-  animation-delay: -.5s;
-}
-
-@keyframes walk {
-  from { margin-bottom: 0; }
-  to { margin-bottom: 3px; }
-}
-
-@keyframes legWalk {
-  from { transform: rotate(-13deg); }
-  to { transform: rotate(13deg); }
-}
-
-.scene-caption {
-  position: absolute;
-  bottom: 5%;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  z-index: 6;
-}
-
-.scene-caption p {
-  font-size: 9px;
-  letter-spacing: 4px;
-  color: #c8b58d;
-  text-transform: uppercase;
-}
-
-.scene-caption h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 300;
-  margin: 10px 0;
-}
-
-.scroll-hint {
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: #a89c83;
-  animation: hint 2s infinite;
-}
-
-@keyframes hint {
-  50% { opacity: .35; }
-}
-
-.memories {
-  position: relative;
-  padding: 110px 7%;
-  text-align: center;
-  background: radial-gradient(ellipse at top, #282116, #090908 65%);
-}
-
-.section-kicker {
-  font-size: 10px;
-  letter-spacing: 4px;
-  color: var(--gold);
-  text-transform: uppercase;
-}
-
-.memories h2, .ending h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(42px, 7vw, 76px);
-  font-weight: 300;
-  margin: 20px 0;
-}
-
-.memories > p {
-  max-width: 520px;
-  margin: 0 auto;
-  color: #bcb3a4;
-  font-size: 13px;
-  line-height: 2;
-}
-
-.memory-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 25px;
-  max-width: 950px;
-  margin: 65px auto 0;
-}
-
-.memory-card {
-  padding: 10px 10px 20px;
-  background: #15120d;
-  border: 1px solid #c8a86b35;
-  text-align: left;
-  transition: transform .5s, border-color .5s;
-}
-
-.memory-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--gold);
-}
-
-.memory-card img {
-  width: 100%;
-  aspect-ratio: 4/5;
-  object-fit: cover;
-  display: block;
-  filter: saturate(.7);
-}
-
-.memory-card h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 23px;
-  font-weight: 400;
-  margin: 17px 8px 5px;
-}
-
-.memory-card p {
-  margin: 0 8px;
-  color: #b4a58a;
-  font-size: 10px;
-  line-height: 1.8;
-}
-
-.ending {
-  min-height: 70vh;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 70px 25px;
-  background:
-    radial-gradient(ellipse at center, #392c193b, transparent 60%),
-    #080807;
-}
-
-.ending-inner { max-width: 620px; }
-
-.ending h2 em { color: var(--gold); }
-
-.ending p {
-  color: #bcb3a4;
-  font-size: 13px;
-  line-height: 2;
-}
-
-.signature {
-  margin-top: 38px;
-  color: var(--gold);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 27px;
-  font-style: italic;
-}
-
-.footer {
-  text-align: center;
-  padding: 25px;
-  border-top: 1px solid #c5a55c25;
-  color: #8b806c;
-  font-size: 9px;
-  letter-spacing: 2px;
-}
-
-#lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 30;
-  background: #000e;
-  backdrop-filter: blur(12px);
-  display: none;
-  place-items: center;
-  padding: 24px;
-}
-
-#lightbox.open { display: grid; }
-
-.lightbox-content {
-  position: relative;
-  width: min(500px, 100%);
-  max-height: 85vh;
-  text-align: center;
-  animation: introReveal .4s both;
-}
-
-.lightbox-content img {
-  max-height: 65vh;
-  max-width: 100%;
-  border: 1px solid #b99a5c;
-  padding: 7px;
-  object-fit: contain;
-}
-
-.lightbox-content h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 30px;
-  font-weight: 300;
-}
-
-.close {
-  position: absolute;
-  top: -16px;
-  right: -10px;
-  width: 38px;
-  height: 38px;
-  border: 1px solid #d5b77a80;
-  background: #16120c;
-  color: white;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 20px;
-}
-
-.progress {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: 2px;
-  width: 0;
-  background: var(--gold);
-  z-index: 10;
-  box-shadow: 0 0 10px var(--gold);
-}
-
-@media (max-width: 650px) {
-  .topbar { padding: 22px 6%; }
-  .top-note { font-size: 8px; letter-spacing: 1px; }
-  .scene { min-height: 620px; }
-  .wall.back { left: 8%; width: 84%; }
-  .wall.left { left: -30%; width: 65%; }
-  .wall.right { right: -30%; width: 65%; }
-  .artwork { width: 88px; height: 135px; padding: 5px; }
-  .artwork.a1 { margin-left: -145px; }
-  .artwork.a2 { margin-left: -45px; }
-  .artwork.a3 { margin-left: 55px; }
-  .artwork.a4 { margin-left: -105px; width: 78px; height: 100px; }
-  .artwork.a5 { margin-left: 27px; width: 78px; height: 100px; }
-  .memory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .memory-card h3 { font-size: 19px; }
-  .memories { padding: 80px 5%; }
-  .brand { font-size: 20px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
+    radial-gradient(ellipse at 10% 20%,#ffbed6 0,transparent 35%),
+    radial-gradient(ellipse at 90% 70%,#ffd9e6 0,transparent 35%),
+    linear-gradient(145deg,#fff6f8,#ffe7f0 55%,#fff6f9);
+}
+.top{
+  position:relative;z-index:3;
+  padding:23px 6%;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{font-family:'Parisienne',cursive;font-size:27px;color:#bc4778}
+.page-count{font-size:10px;letter-spacing:2px;color:#a96983}
+.content{
+  width:min(1100px,100%);
+  margin:auto;padding:30px 6% 65px;
+  position:relative;z-index:2;
+}
+.hero{
+  min-height:calc(100svh - 90px);
+  display:grid;grid-template-columns:1.1fr .9fr;
+  gap:35px;align-items:center;
+}
+.kicker{
+  text-transform:uppercase;letter-spacing:4px;
+  color:#c04b7d;font-size:10px;font-weight:700;
+}
+h1,h2,h3,p{margin-top:0}
+h1,h2{font-family:'Playfair Display',serif;font-weight:400}
+h1{
+  font-size:clamp(47px,7vw,83px);
+  line-height:1.1;letter-spacing:-2px;margin:20px 0;
+}
+h1 em,h2 em{color:var(--deep);font-weight:400}
+.intro{
+  font-size:14px;line-height:2;
+  max-width:410px;color:var(--muted);
+}
+.signature{
+  font-family:'Parisienne',cursive;font-size:32px;
+  color:#c74b80;margin:23px 0;
+}
+.btn{
+  border:0;border-radius:50px;padding:16px 24px;
+  background:linear-gradient(135deg,#ed8bb2,#d94f87);
+  color:white;box-shadow:0 9px 25px #d94f873b;
+  cursor:pointer;transition:transform .3s,box-shadow .3s;
+  font-size:12px;letter-spacing:.5px;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 13px 32px #d94f8755}
+.btn.secondary{
+  background:#fff9fb;color:#b54376;
+  border:1px solid #edb0c8;box-shadow:none;
+}
+.photo-wrap{
+  position:relative;width:100%;max-width:390px;
+  margin:auto;animation:floatPhoto 5s ease-in-out infinite;
+}
+.photo-wrap:before{
+  content:'';position:absolute;inset:-13px;
+  border:1px solid #df8bab;transform:rotate(5deg);
+  border-radius:190px 190px 15px 15px;
+}
+.hero-photo{
+  width:100%;aspect-ratio:4/5;object-fit:cover;
+  display:block;border-radius:190px 190px 15px 15px;
+  border:7px solid #fffafc;
+  box-shadow:0 20px 65px #b84e7730;
+}
+.photo-tag{
+  position:absolute;bottom:22px;left:-22px;
+  padding:15px 19px;background:#fffaf8;
+  border-radius:12px;box-shadow:0 8px 28px #9d49601c;
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:16px;transform:rotate(-5deg);
+}
+@keyframes floatPhoto{50%{transform:translateY(-10px) rotate(1deg)}}
+
+.heart{
+  position:fixed;z-index:1;bottom:-40px;pointer-events:none;
+  animation:rise linear forwards;opacity:0;
+}
+@keyframes rise{
+  0%{transform:translateY(0) rotate(0) scale(.6);opacity:0}
+  15%{opacity:.8}
+  85%{opacity:.65}
+  100%{transform:translateY(-115vh) rotate(35deg) scale(1.2);opacity:0}
+}
+.section-head{text-align:center;margin:15px auto 38px;max-width:580px}
+.section-head h2{font-size:clamp(38px,6vw,60px);margin:13px 0}
+.section-head p{font-size:13px;line-height:1.9;color:var(--muted)}
+.memory-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:20px;
+}
+.memory{
+  background:#fffafb;padding:10px 10px 20px;
+  border-radius:130px 130px 13px 13px;
+  border:1px solid #f7d3e0;
+  box-shadow:0 10px 30px #c65d8510;
+  transition:transform .4s;
+}
+.memory:hover{transform:translateY(-8px) rotate(-1deg)}
+.memory img{
+  display:block;width:100%;aspect-ratio:4/5;
+  object-fit:cover;border-radius:120px 120px 8px 8px;
+}
+.memory h3{
+  font-family:'Playfair Display',serif;
+  font-weight:400;text-align:center;font-size:19px;
+  margin:17px 5px 7px;
+}
+.memory p{
+  font-size:11px;line-height:1.8;text-align:center;
+  padding:0 8px;color:var(--muted);margin:0;
+}
+.note{
+  max-width:620px;margin:40px auto 30px;
+  background:#fffafc;border:1px solid #f3cadb;
+  border-radius:18px;padding:28px;
+  text-align:center;box-shadow:0 12px 35px #c85e8310;
+}
+.note h3{font-family:'Playfair Display',serif;font-size:25px;font-weight:400}
+.note p{font-size:13px;line-height:2;color:var(--muted);margin-bottom:0}
+.nav-buttons{
+  display:flex;justify-content:center;gap:12px;
+  flex-wrap:wrap;margin-top:35px;
+}
+.gift-scene{
+  width:190px;height:180px;position:relative;
+  margin:30px auto 42px;cursor:pointer;
+  transition:transform .3s;
+}
+.gift-scene:hover{transform:scale(1.04)}
+.gift-box{
+  position:absolute;bottom:0;left:15px;width:160px;height:115px;
+  border-radius:7px;
+  background:linear-gradient(120deg,#f7a5c4,#dc5c91);
+  box-shadow:0 15px 30px #b94a7730;
+}
+.gift-lid{
+  position:absolute;top:42px;left:5px;width:180px;height:35px;
+  border-radius:5px;background:linear-gradient(120deg,#ffcee0,#ec85ad);
+  z-index:2;transition:transform .8s;
+}
+.gift-ribbon{
+  position:absolute;left:78px;top:42px;width:32px;height:115px;
+  background:#fff0a9;z-index:3;
+}
+.gift-bow{
+  position:absolute;top:12px;left:55px;width:80px;height:45px;
+  z-index:4;transition:transform .8s;
+}
+.gift-bow:before,.gift-bow:after{
+  content:'';position:absolute;width:39px;height:29px;
+  border:7px solid #fff0a9;border-radius:50% 50% 10% 50%;
+}
+.gift-bow:before{left:0;transform:rotate(24deg)}
+.gift-bow:after{right:0;transform:scaleX(-1) rotate(24deg)}
+.gift-scene.opened .gift-lid{transform:translate(15px,-65px) rotate(17deg)}
+.gift-scene.opened .gift-bow{transform:translateY(-65px) rotate(15deg)}
+.gift-hint{font-size:11px;color:#bd6286;text-align:center;letter-spacing:1px}
+.letter{
+  max-width:650px;margin:25px auto;
+  padding:clamp(25px,6vw,55px);
+  border:1px solid #edbfd1;border-radius:4px;
+  background:linear-gradient(135deg,#fffaf8,#fff0f5);
+  box-shadow:0 15px 45px #c65d8515;
+  text-align:center;position:relative;
+}
+.letter:before{
+  content:'♡';position:absolute;top:12px;left:18px;
+  color:#df85a9;font-size:23px;
+}
+.letter h2{font-size:clamp(34px,6vw,52px);margin:12px 0 20px}
+.letter p{font-size:13px;line-height:2.1;color:#97677c}
+.hidden-message{display:none;animation:reveal .8s both}
+.hidden-message.show{display:block}
+@keyframes reveal{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.footer{text-align:center;font-size:10px;letter-spacing:2px;color:#b27a90;padding:25px}
+#confetti{position:fixed;inset:0;z-index:20;pointer-events:none}
+@media(max-width:650px){
+  .top{padding:18px 6%}
+  .hero{grid-template-columns:1fr;gap:35px;padding-top:15px}
+  .hero-copy{text-align:center}
+  .intro{margin:auto}
+  h1{font-size:clamp(46px,12vw,66px);letter-spacing:-1px}
+  .photo-wrap{max-width:270px;margin:5px auto 30px}
+  .photo-tag{left:-12px;font-size:14px}
+  .memory-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .memory{padding:7px 7px 15px}
+  .memory h3{font-size:16px}
+  .memory p{font-size:10px}
+  .content{padding:20px 5% 45px}
+  .section-head{margin-bottom:27px}
+  .note{padding:23px 17px}
+  .page-count{font-size:9px;letter-spacing:1px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important;
   }
 }
 </style>
@@ -653,259 +252,319 @@ button { font: inherit; }
 
 <body>
 
-<div id="intro">
-  <div class="intro-content">
-    <div class="eyebrow">A place beyond time</div>
-    <h1 class="intro-title">Our <em>Museum</em></h1>
-    <p class="intro-sub">Every memory deserves a place.</p>
-    <button class="enter-btn" id="enter">Enter the collection ↗</button>
-  </div>
-</div>
+<canvas id="confetti"></canvas>
 
-<header class="topbar">
-  <div class="brand">Our <span>Museum.</span></div>
-  <div class="top-note">A COLLECTION OF MEMORIES</div>
-</header>
+<!-- PAGE 1: BIRTHDAY INTRO -->
+<section class="page active" id="page1">
+  <div class="background-glow"></div>
+  <header class="top">
+    <div class="logo">a little magic ♡</div>
+    <div class="page-count">01 / 03</div>
+  </header>
 
-<main id="museum">
-
-  <section class="scene" id="galleryScene">
-    <div class="ambient"></div>
-    <div class="ceiling"></div>
-    <div class="floor"></div>
-
-    <div class="gallery" id="gallery">
-      <div class="wall left"></div>
-      <div class="wall right"></div>
-      <div class="wall back"></div>
-
-      <div class="gallery-light light-one"></div>
-      <div class="gallery-light light-two"></div>
-      <div class="gallery-light light-three"></div>
-
-      <button class="artwork a1"
-        data-title="Golden Moments"
-        data-img="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=85"
-        aria-label="View Golden Moments">
-        <img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=450&q=80" alt="Golden landscape">
-        <span class="art-label">GOLDEN MOMENTS</span>
+  <main class="content hero">
+    <div class="hero-copy">
+      <div class="kicker">A little surprise for you</div>
+      <h1>Today is all<br>about <em>you.</em></h1>
+      <p class="intro">
+        Someone as special as you deserves more than an ordinary wish.
+        So I made you a tiny corner of the internet, filled with love,
+        happiness and a little birthday magic.
+      </p>
+      <div class="signature">Happy Birthday ♡</div>
+      <button class="btn" onclick="goToPage(2)">
+        Open Your Surprise &nbsp; ↗
       </button>
-
-      <button class="artwork a2"
-        data-title="A Beautiful World"
-        data-img="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=85"
-        aria-label="View A Beautiful World">
-        <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=450&q=80" alt="Mountain lake">
-        <span class="art-label">BEAUTIFUL WORLD</span>
-      </button>
-
-      <button class="artwork a3"
-        data-title="Quiet Days"
-        data-img="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=85"
-        aria-label="View Quiet Days">
-        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=450&q=80" alt="Forest">
-        <span class="art-label">QUIET DAYS</span>
-      </button>
-
-      <button class="artwork a4"
-        data-title="Little Things"
-        data-img="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=85"
-        aria-label="View Little Things">
-        <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=350&q=80" alt="Flowers">
-        <span class="art-label">LITTLE THINGS</span>
-      </button>
-
-      <button class="artwork a5"
-        data-title="Forever Exploring"
-        data-img="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=85"
-        aria-label="View Forever Exploring">
-        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=350&q=80" alt="Mountain peaks">
-        <span class="art-label">NEW HORIZONS</span>
-      </button>
-
-      <div class="statue"></div>
-
-      <div class="character one" aria-hidden="true">
-        <div class="head"></div><div class="body"></div>
-        <div class="leg"></div><div class="leg two"></div>
-        <div class="arm"></div><div class="arm two"></div>
-      </div>
-
-      <div class="character two" aria-hidden="true">
-        <div class="head"></div><div class="body"></div>
-        <div class="leg"></div><div class="leg two"></div>
-        <div class="arm"></div><div class="arm two"></div>
-      </div>
     </div>
 
-    <div class="scene-caption">
-      <p>Chapter I · The beginning</p>
-      <h2>Walk Through Our World</h2>
-      <div class="scroll-hint">SCROLL TO DISCOVER ↓</div>
+    <div class="photo-wrap">
+      <img class="hero-photo"
+        src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=900&q=85"
+        alt="Pink birthday balloons and celebration">
+      <div class="photo-tag">Made just for you ♡</div>
     </div>
-  </section>
+  </main>
+</section>
 
-  <section class="memories" id="memories">
-    <div class="section-kicker">The permanent collection</div>
-    <h2>Some Things Stay.</h2>
-    <p>
-      Every picture tells a story. Every little moment becomes a memory.
-      This is a small collection of the beautiful things that make life special.
-    </p>
+<!-- PAGE 2: BIRTHDAY GALLERY -->
+<section class="page" id="page2">
+  <div class="background-glow"></div>
+  <header class="top">
+    <div class="logo">little moments ♡</div>
+    <div class="page-count">02 / 03</div>
+  </header>
+
+  <main class="content">
+    <div class="section-head">
+      <div class="kicker">A day worth celebrating</div>
+      <h2>Let life be full of <em>beautiful things.</em></h2>
+      <p>
+        More laughter, more adventures, more dreams coming true.
+        Here is to another wonderful chapter of your story.
+      </p>
+    </div>
 
     <div class="memory-grid">
-      <article class="memory-card">
+      <article class="memory">
         <img loading="lazy"
-          src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=700&q=80"
-          alt="Friends sharing a moment">
-        <h3>The Little Things</h3>
-        <p>Sometimes the smallest moments mean the most.</p>
+          src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=600&q=85"
+          alt="Birthday cake">
+        <h3>Sweet Moments</h3>
+        <p>May your days be as sweet as birthday cake.</p>
       </article>
 
-      <article class="memory-card">
+      <article class="memory">
         <img loading="lazy"
-          src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=80"
-          alt="Beautiful scenic view">
+          src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=600&q=85"
+          alt="Beautiful pink flowers">
+        <h3>Little Joys</h3>
+        <p>May happiness find you in the smallest things.</p>
+      </article>
+
+      <article class="memory">
+        <img loading="lazy"
+          src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=85"
+          alt="Festive birthday decorations">
+        <h3>Big Celebrations</h3>
+        <p>May your biggest dreams get their moment to shine.</p>
+      </article>
+
+      <article class="memory">
+        <img loading="lazy"
+          src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=600&q=85"
+          alt="Celebration with glowing lights">
+        <h3>Golden Memories</h3>
+        <p>May this year give you stories worth telling.</p>
+      </article>
+
+      <article class="memory">
+        <img loading="lazy"
+          src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=600&q=85"
+          alt="Friends celebrating together">
+        <h3>Good People</h3>
+        <p>May you always be surrounded by genuine love.</p>
+      </article>
+
+      <article class="memory">
+        <img loading="lazy"
+          src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=85"
+          alt="Party lights">
         <h3>New Adventures</h3>
-        <p>There is always another beautiful place to discover.</p>
-      </article>
-
-      <article class="memory-card">
-        <img loading="lazy"
-          src="https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=700&q=80"
-          alt="Wildlife in nature">
-        <h3>Forever Remembered</h3>
-        <p>The moments we keep become part of who we are.</p>
+        <p>May your next chapter be your favourite one yet.</p>
       </article>
     </div>
-  </section>
 
-  <section class="ending">
-    <div class="ending-inner">
-      <div class="section-kicker">The final room</div>
-      <h2>Some memories<br>become <em>forever.</em></h2>
+    <div class="note">
+      <div class="kicker">A little reminder</div>
+      <h3>You make the world a little brighter.</h3>
       <p>
-        If this little museum could keep one thing safe,
-        it would be the feeling behind every beautiful memory.
-        Thank you for being part of this story.
+        Never stop being yourself. Keep dreaming, keep growing,
+        and remember that you deserve all the beautiful things
+        life has waiting for you.
       </p>
-      <div class="signature">Made with care ♡</div>
     </div>
-  </section>
 
-  <footer class="footer">
-    OUR MUSEUM · EVERY MEMORY HAS A STORY
-  </footer>
-</main>
+    <div class="nav-buttons">
+      <button class="btn secondary" onclick="goToPage(1)">← Previous</button>
+      <button class="btn" onclick="goToPage(3)">One Last Surprise ♡</button>
+    </div>
+  </main>
+</section>
 
-<div class="progress" id="progress"></div>
+<!-- PAGE 3: GIFT AND PERSONAL WISH -->
+<section class="page" id="page3">
+  <div class="background-glow"></div>
+  <header class="top">
+    <div class="logo">from the heart ♡</div>
+    <div class="page-count">03 / 03</div>
+  </header>
 
-<div id="lightbox" role="dialog" aria-modal="true"
-  aria-label="Artwork preview">
-  <div class="lightbox-content">
-    <button class="close" id="closeLightbox" aria-label="Close">×</button>
-    <img id="largeImage" src="" alt="">
-    <h3 id="imageTitle"></h3>
-    <p style="color:#b9ac91;font-size:11px;letter-spacing:2px">
-      A MOMENT WORTH REMEMBERING
-    </p>
-  </div>
-</div>
+  <main class="content">
+    <div class="section-head">
+      <div class="kicker">Your final surprise</div>
+      <h2>One little gift, a <em>million wishes.</em></h2>
+      <p>There is something waiting just for you. Tap the gift to open it.</p>
+    </div>
+
+    <div class="gift-scene" id="gift" role="button" tabindex="0"
+      aria-label="Open birthday gift">
+      <div class="gift-bow"></div>
+      <div class="gift-box"></div>
+      <div class="gift-ribbon"></div>
+      <div class="gift-lid"></div>
+    </div>
+    <div class="gift-hint" id="giftHint">TAP TO OPEN YOUR GIFT ✧</div>
+
+    <div class="letter">
+      <div class="kicker">A birthday letter</div>
+      <div id="letterTeaser">
+        <h2>Dear Birthday Star,</h2>
+        <p>
+          Today is a reminder of how wonderful it is that you exist.
+          You deserve peace in your heart, courage for your dreams,
+          people who truly care, and countless reasons to smile.
+        </p>
+        <button class="btn" id="revealBtn">Read Your Special Wish ♡</button>
+      </div>
+
+      <div class="hidden-message" id="specialMessage">
+        <h2>Happy Birthday, <em>Beautiful Soul.</em></h2>
+        <p>
+          May this new chapter bring you closer to every dream
+          you have been quietly wishing for.
+        </p>
+        <p>
+          I hope you laugh a little louder, love a little deeper,
+          worry a little less, and discover just how amazing life
+          can be. You deserve happiness that stays long after
+          the candles are blown out.
+        </p>
+        <p>
+          Keep shining in your own way. The world is better
+          with you in it. ♡
+        </p>
+        <div class="signature">With lots of love ♡</div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn secondary" onclick="goToPage(2)">← Memories</button>
+      <button class="btn" id="celebrateBtn">Celebrate Again ✨</button>
+    </div>
+  </main>
+
+  <footer class="footer">MADE WITH LOVE, JUST FOR YOU ♡</footer>
+</section>
 
 <script>
-const intro = document.getElementById('intro');
-const museum = document.getElementById('museum');
-const gallery = document.getElementById('gallery');
-const scene = document.getElementById('galleryScene');
-const lightbox = document.getElementById('lightbox');
-const largeImage = document.getElementById('largeImage');
-const imageTitle = document.getElementById('imageTitle');
+let currentPage = 1;
 
-document.getElementById('enter').addEventListener('click', () => {
-  intro.classList.add('hidden');
-  museum.classList.add('ready');
-  document.body.style.overflowY = 'auto';
-});
-
-document.body.style.overflowY = 'hidden';
-
-document.querySelectorAll('.artwork').forEach(frame => {
-  frame.addEventListener('click', () => {
-    largeImage.src = frame.dataset.img;
-    largeImage.alt = frame.dataset.title;
-    imageTitle.textContent = frame.dataset.title;
-    lightbox.classList.add('open');
+function goToPage(number) {
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.remove('active');
   });
-});
 
-function closeLightbox() {
-  lightbox.classList.remove('open');
-  largeImage.src = '';
+  document.getElementById('page' + number).classList.add('active');
+  currentPage = number;
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  if (number === 2 || number === 3) createHearts(10);
 }
 
-document.getElementById('closeLightbox')
-  .addEventListener('click', closeLightbox);
+function createHearts(count = 8) {
+  const symbols = ['♡', '♥', '✧', '❤', '୨୧'];
 
-lightbox.addEventListener('click', event => {
-  if (event.target === lightbox) closeLightbox();
+  for (let i = 0; i < count; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (14 + Math.random() * 25) + 'px';
+    heart.style.color = ['#e66d9c','#d94f87','#f6aac7','#c47aa1'][Math.floor(Math.random()*4)];
+    heart.style.animationDuration = (5 + Math.random() * 6) + 's';
+    document.body.appendChild(heart);
+    heart.addEventListener('animationend', () => heart.remove());
+  }
+}
+
+setInterval(() => {
+  if (currentPage === 1 || currentPage === 3) createHearts(2);
+}, 1800);
+
+// Gift opening
+const gift = document.getElementById('gift');
+function openGift() {
+  gift.classList.toggle('opened');
+  const isOpen = gift.classList.contains('opened');
+  document.getElementById('giftHint').textContent =
+    isOpen ? 'A LITTLE HAPPINESS, JUST FOR YOU ♡' : 'TAP TO OPEN YOUR GIFT ✧';
+
+  if (isOpen) celebrate();
+}
+gift.addEventListener('click', openGift);
+gift.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    openGift();
+  }
 });
 
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') closeLightbox();
+// Birthday letter
+document.getElementById('revealBtn').addEventListener('click', () => {
+  document.getElementById('letterTeaser').style.display = 'none';
+  document.getElementById('specialMessage').classList.add('show');
+  celebrate();
 });
 
-let mouseX = 0;
-let mouseY = 0;
-let currentX = 0;
-let currentY = 0;
+// Confetti canvas
+const canvas = document.getElementById('confetti');
+const ctx = canvas.getContext('2d');
+let pieces = [];
+let frameId = null;
 
-scene.addEventListener('pointermove', event => {
-  if (event.pointerType === 'touch') return;
-  const rect = scene.getBoundingClientRect();
-  mouseX = ((event.clientX - rect.left) / rect.width - .5) * 10;
-  mouseY = ((event.clientY - rect.top) / rect.height - .5) * 5;
-});
+function resizeCanvas() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
-scene.addEventListener('pointerleave', () => {
-  mouseX = 0;
-  mouseY = 0;
-});
+function celebrate() {
+  const colors = ['#ff8db8','#ffd4e5','#d94f87','#ffe6a8','#ffffff'];
 
-function animateGallery() {
-  currentX += (mouseX - currentX) * .035;
-  currentY += (mouseY - currentY) * .035;
-
-  if (museum.classList.contains('ready')) {
-    gallery.style.transform =
-      `translate3d(${currentX}px, ${currentY}px, 0) rotateY(${-currentX * .12}deg)`;
+  for (let i = 0; i < 130; i++) {
+    pieces.push({
+      x: Math.random() * window.innerWidth,
+      y: -20 - Math.random() * window.innerHeight * .5,
+      vx: (Math.random() - .5) * 4,
+      vy: 2 + Math.random() * 5,
+      size: 3 + Math.random() * 5,
+      angle: Math.random() * 6,
+      spin: (Math.random() - .5) * .15,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      life: 150
+    });
   }
 
-  requestAnimationFrame(animateGallery);
+  if (!frameId) animateConfetti();
 }
 
-animateGallery();
+function animateConfetti() {
+  ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-window.addEventListener('scroll', () => {
-  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-  const amount = scrollable > 0 ? window.scrollY / scrollable * 100 : 0;
-  document.getElementById('progress').style.width = amount + '%';
-}, { passive: true });
+  pieces.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.angle += p.spin;
+    p.vy += .025;
+    p.life--;
 
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-      revealObserver.unobserve(entry.target);
-    }
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.angle);
+    ctx.globalAlpha = Math.min(1, p.life / 35);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size * 1.7);
+    ctx.restore();
   });
-}, { threshold: .12 });
 
-document.querySelectorAll('.memory-card').forEach(card => {
-  card.style.opacity = '0';
-  card.style.transform = 'translateY(25px)';
-  card.style.transition = 'opacity .8s, transform .8s';
-  revealObserver.observe(card);
+  pieces = pieces.filter(p => p.life > 0 && p.y < window.innerHeight + 30);
+
+  if (pieces.length) {
+    frameId = requestAnimationFrame(animateConfetti);
+  } else {
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    frameId = null;
+  }
+}
+
+document.getElementById('celebrateBtn').addEventListener('click', () => {
+  celebrate();
+  createHearts(20);
 });
 </script>
 </body>
